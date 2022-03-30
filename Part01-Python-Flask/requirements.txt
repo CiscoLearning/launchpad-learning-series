@@ -1,0 +1,7 @@
+# This file is used by pip to install required python packages
+# Usage: pip install -r requirements.txt
+
+Flask==2.1.0
+requests==2.27.1
+virtualenv==20.14.0
+tinydb==4.7.0

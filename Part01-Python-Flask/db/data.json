@@ -1,0 +1,1 @@
+{"_default": {"1": {"id": 282, "ipadd": "192.168.100.12", "mask": "255.255.255.0", "vrf": "Global", "status": "available"}, "2": {"id": 237, "ipadd": "192.168.100.10", "mask": "255.255.255.0", "vrf": "Admin", "status": "reserved"}, "3": {"id": 219, "ipadd": "192.168.100.100", "mask": "255.255.255.0", "vrf": "dmz", "status": "used"}}}
