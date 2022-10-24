@@ -4,12 +4,19 @@ from flask import Flask, request, jsonify
 from flask_restx import Resource, Api, reqparse, fields
 from tinydb import TinyDB, Query, where
 
-
+"""
+As every other extension, you can initialize it with an application object
+"""
 app = Flask(__name__)
-api = Api(app, version='1.0', title='SIMPLE IPAM API', description='A simple IPAM API leveraging Flask-RESTX Library ',)
+api = Api(app, version='1.0', title='SIMPLE IPAM API',
+          description='A simple IPAM API leveraging Flask-RESTX Library ', )
 db = TinyDB('db/data.json')
 ns = api.namespace('ipam', description='IPAM operations')
 
+"""
+Flask-RESTX’s request parsing interface, reqparse, is modeled after the argparse interface.
+It’s designed to provide simple and uniform access to any variable on the flask.request object in Flask.
+"""
 parser = api.parser()
 parser.add_argument("ip", type=str, required=True, help="Example - [10.10.100.5]", location="form")
 parser.add_argument("netmask", type=str, required=True, help="Example - [255.255.255.0]", location="form")
@@ -17,6 +24,11 @@ parser.add_argument("vrf", type=str, required=True, help="Example - [Global, Adm
 parser.add_argument("status", type=str, required=True, help="Example - [Available, Reserved, Used]", location="form")
 
 
+
+"""
+HTTP methods defined as methods on your resource.
+api.doc() decorator allows you to include additional information in the Swagger docs.
+"""
 @ns.route("/query")
 @api.doc(responses={404: "query not found"})
 @api.doc(responses={200: "success"})
@@ -30,7 +42,7 @@ class QueryRecords(Resource):
 @api.doc(responses={404: "query not found"})
 @api.doc(responses={200: "success"})
 class QuerySpecificRecords(Resource):
-    def get(self,ip):
+    def get(self, ip):
         for item in db:
             result = db.search(Query().ipadd == ip)
             if result:
@@ -56,7 +68,7 @@ class CreateEntry(Resource):
 @api.doc(params={'id': 'Record ID to Update'})
 class UpdateEntry(Resource):
     @api.doc(parser=parser)
-    def put(self,id):
+    def put(self, id):
         args = parser.parse_args()
         db.update_multiple([
             ({'status': args['status']}, where('id') == int(id)),
