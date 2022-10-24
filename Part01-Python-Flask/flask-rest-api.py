@@ -9,7 +9,7 @@ db = TinyDB('db/data.json')
 
 @app.route('/')
 def index():
-    return ("Welcome to Launchpad 🚀 - Flask APP is up and running on {}".format(request.host_url))
+    return ("Welcome to Launchpad 🚀 - Flask APP Here is up and running on {}".format(request.host_url))
 
 
 @app.route('/query', methods=['GET'])
